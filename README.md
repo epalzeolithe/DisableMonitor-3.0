@@ -1,3 +1,12 @@
-DisableMonitor
+DisableMonitor 3.0
 ==============
-Easily disable, enable or change the resolution of all monitors attached to your Mac. This is a fork of the [original project](https://github.com/Eun/DisableMonitor) with only some minor adjustments. If you want to support the original author please [donate with PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=eun%40su%2eam&lc=US&item_name=DisableMonitor%20Donation&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest).
+Easily disable, enable or change the resolution of all monitors attached to your Mac. 
+
+This is a fork of the [original project](https://github.com/Eun/DisableMonitor) 
+
+Main changes
+------------
+- Catalina Support
+- Remove buggy manage menu
+- Filter resolution to keep 60hz and HiDpi resolutions
+- Add French language support
