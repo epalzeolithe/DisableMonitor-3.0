@@ -7,6 +7,7 @@
 "MENU_MANAGE" = "Verwalten";
 "MENU_ABOUT" = "Über...";
 "MENU_QUIT" = "Beenden";
+"MENU_MIRROR" = "Toggle Mirror Mode";
 "CHECK_FOR_UPDATES" = "Auf Updates überprüfen";
 "ALERT_OK" = "OK";
 "ALERT_CANCEL" = "Abbrechen";

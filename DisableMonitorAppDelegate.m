@@ -387,6 +387,56 @@ CFStringRef const kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
     }
 }
 
+#define MAX_DISPLAYS 10
+#define SECONDARY_DISPLAY_COUNT 9
+-(void)toggleMirror:(id) sender
+{
+    CGDisplayCount numberOfTotalDspys = MAX_DISPLAYS;
+    CGDirectDisplayID activeDspys[MAX_DISPLAYS];
+    CGDirectDisplayID onlineDspys[MAX_DISPLAYS];
+    CGDirectDisplayID secondaryDspys[SECONDARY_DISPLAY_COUNT];
+
+    CGDisplayCount numberOfActiveDspys;
+    CGDisplayCount numberOfOnlineDspys;
+    
+    CGDisplayErr activeError = CGGetActiveDisplayList(numberOfTotalDspys,activeDspys,&numberOfActiveDspys);
+    if (activeError!=0) {printf("Error in obtaining active diplay list: %d\n",activeError);return ;}
+
+    CGDisplayErr onlineError = CGGetOnlineDisplayList (numberOfTotalDspys,onlineDspys,&numberOfOnlineDspys);
+    if (onlineError!=0) {printf("Error in obtaining online diplay list: %d\n",onlineError); return ;}
+    if (numberOfOnlineDspys<2) {printf("No secondary display detected.\n");return;}
+    
+    bool displaysMirrored = CGDisplayIsInMirrorSet(CGMainDisplayID());
+    int secondaryDisplayIndex = 0;
+    for (int displayIndex = 0; displayIndex<numberOfOnlineDspys; displayIndex++) {
+        if (onlineDspys[displayIndex] != CGMainDisplayID()) {
+            secondaryDspys[secondaryDisplayIndex] = onlineDspys[displayIndex];
+            secondaryDisplayIndex++;
+        }
+    }
+    CGDisplayConfigRef configRef;
+    CGError err = CGBeginDisplayConfiguration (&configRef);
+    if (displaysMirrored) {
+            err = kCGErrorSuccess;
+            for (int i = 0; i<numberOfOnlineDspys - 1; i++) {
+                err = err ?: CGConfigureDisplayMirrorOfDisplay(configRef, secondaryDspys[i], kCGNullDirectDisplay);
+                }
+        } else {
+            err = kCGErrorSuccess;
+            for (int i = 0; i<numberOfOnlineDspys - 1; i++) {
+                err = err ?: CGConfigureDisplayMirrorOfDisplay(configRef, secondaryDspys[i], CGMainDisplayID());
+                }
+        }
+    //if (err != 0) printf("Error configuring displays: %d\n",err);
+    // Apply the changes
+    err = CGCompleteDisplayConfiguration (configRef,kCGConfigurePermanently);
+    //if (err != 0) printf("Error applying configuration: %d\n",err);
+    //return err;
+}
+
+
+
+
 /**
  *  user clicked on turn off monitors
  *
@@ -552,6 +602,9 @@ CFStringRef const kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
     }
     
     NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle: NSLocalizedString(@"MENU_DETECT",NULL) action:@selector(detectMonitorsClicked:) keyEquivalent:@""];
+    [statusMenu addItem:menuItem];
+    
+    menuItem = [[NSMenuItem alloc] initWithTitle: NSLocalizedString(@"MENU_MIRROR",NULL) action:@selector(toggleMirror:) keyEquivalent:@""];
     [statusMenu addItem:menuItem];
     
     [statusMenu addItem:[[NSMenuItem separatorItem] copy]];
