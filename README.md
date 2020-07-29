@@ -1,6 +1,7 @@
 DisableMonitor 3.1
 ==============
 Easily disable, enable or change the resolution of all monitors attached to your Mac.
+
 Toggle mirror mode (since v3.1)
 
 This is a fork of the [original project](https://github.com/Eun/DisableMonitor) 
