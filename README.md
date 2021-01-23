@@ -6,7 +6,7 @@ Toggle mirror mode (since v3.1)
 
 This is a fork of the [original project](https://github.com/Eun/DisableMonitor)
 
-WORKING IN BUG SUR with last BIG SUR update
+WORKING IN BIG SUR with last BIG SUR update
 
 Main changes
 ------------
