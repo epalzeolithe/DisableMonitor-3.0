@@ -10,7 +10,7 @@ WORKING IN BUG SUR with last BIG SUR update
 
 Main changes
 ------------
-- Catalina 10.15 Support
+- Catalina 10.15 Support and Big Sur Intel Support 11.1
 - Instant Enable/Disable display without blink
 - Remove buggy manage menu
 - Filter resolution to keep 60hz and HiDpi resolutions
